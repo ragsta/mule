@@ -36,7 +36,7 @@ public class PostRegistrationActionsPostProcessor implements BeanPostProcessor
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
     {
-        registryHelper.postObjectRegistrationActions(bean);
+        //registryHelper.postObjectRegistrationActions(bean);
         return bean;
     }
 }
