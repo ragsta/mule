@@ -20,7 +20,7 @@ import org.mule.config.spring.processors.ExpressionEnricherPostProcessor;
 import org.mule.config.spring.processors.FilteringCommonAnnotationBeanPostProcessor;
 import org.mule.config.spring.processors.LifecycleStatePostProcessor;
 import org.mule.config.spring.processors.NoDevkitInjectorProcessor;
-import org.mule.config.spring.processors.PostRegistrationActionsPostProcessor;
+import org.mule.config.spring.processors.TransformerResolverPostProcessor;
 import org.mule.config.spring.util.LaxInstantiationStrategyWrapper;
 import org.mule.registry.MuleRegistryHelper;
 import org.mule.util.IOUtils;
@@ -96,7 +96,7 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext
                               new GlobalNamePostProcessor(),
                               new ExpressionEnricherPostProcessor(muleContext),
                               new AnnotatedTransformerObjectPostProcessor(muleContext),
-                              new PostRegistrationActionsPostProcessor((MuleRegistryHelper) muleContext.getRegistry()),
+                              new TransformerResolverPostProcessor((MuleRegistryHelper) muleContext.getRegistry()),
                               new DiscardedOptionalBeanPostProcessor(optionalObjectsController, (DefaultListableBeanFactory) beanFactory),
                               new LifecycleStatePostProcessor(muleContext.getLifecycleManager().getState())
         );

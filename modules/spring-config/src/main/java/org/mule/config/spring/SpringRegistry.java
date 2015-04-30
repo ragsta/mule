@@ -108,20 +108,14 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
             ((ConfigurableApplicationContext) applicationContext).refresh();
         }
 
-        initTransformers();
+        initConverters();
         //This is used to track the Spring context lifecycle since there is no way to confirm the lifecycle phase from the application context
         springContextInitialised.set(true);
     }
 
-    private void initTransformers()
+    private void initConverters()
     {
         MuleRegistryHelper registryHelper = (MuleRegistryHelper) muleContext.getRegistry();
-
-        Map<String, TransformerResolver> resolvers = registryHelper.lookupByType(TransformerResolver.class);
-        for (TransformerResolver resolver : resolvers.values())
-        {
-            registryHelper.registerTransformerResolver(resolver);
-        }
 
         Map<String, Converter> converters = registryHelper.lookupByType(Converter.class);
         for (Converter converter : converters.values())

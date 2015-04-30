@@ -6,23 +6,24 @@
  */
 package org.mule.config.spring.processors;
 
+import org.mule.api.registry.TransformerResolver;
 import org.mule.registry.MuleRegistryHelper;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /**
- * A {@link BeanPostProcessor} which invokes {@link MuleRegistryHelper#postObjectRegistrationActions(Object)}
- * after spring finishes initialization over each object
+ * A {@link BeanPostProcessor} which registers beans which are instances of
+ * {@Link TransformerResolver} using {@link MuleRegistryHelper#registerTransformerResolver(TransformerResolver)}
  *
  * @since 3.7.0
  */
-public class PostRegistrationActionsPostProcessor implements BeanPostProcessor
+public class TransformerResolverPostProcessor implements BeanPostProcessor
 {
 
     private final MuleRegistryHelper registryHelper;
 
-    public PostRegistrationActionsPostProcessor(MuleRegistryHelper registryHelper)
+    public TransformerResolverPostProcessor(MuleRegistryHelper registryHelper)
     {
         this.registryHelper = registryHelper;
     }
@@ -36,7 +37,10 @@ public class PostRegistrationActionsPostProcessor implements BeanPostProcessor
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
     {
-        registryHelper.postObjectRegistrationActions(bean);
+        if (bean instanceof TransformerResolver)
+        {
+            registryHelper.registerTransformerResolver((TransformerResolver) bean);
+        }
         return bean;
     }
 }
